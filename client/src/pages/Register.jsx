@@ -25,18 +25,15 @@ export default function Register() {
     try {
       setLoading(true);
       await register(form);
-      navigate(form.role === 'recruiter' ? '/dashboard' : '/jobs');
+      navigate('/dashboard');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+      toast.error(err.response?.data?.message || 'Registration failed.');
+    } finally { setLoading(false); }
   };
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-12 bg-gradient-to-br from-indigo-50 via-white to-violet-50">
       <div className="w-full max-w-md animate-slide-up">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600 text-white mb-4 shadow-lg shadow-indigo-200">
             <FiBriefcase className="w-7 h-7" />
@@ -45,16 +42,21 @@ export default function Register() {
           <p className="text-slate-500 mt-1 text-sm">Join SmartHire — it's free!</p>
         </div>
 
-        {/* Form card */}
         <div className="card p-8">
           <form onSubmit={onSubmit} className="space-y-5">
-            {/* Role selector */}
+
+            {/* Role Selector */}
             <div>
               <label className="form-label">I am a...</label>
               <div className="grid grid-cols-2 gap-3">
                 {ROLES.map(({ value, label, desc }) => (
-                  <button key={value} type="button" onClick={() => setForm({ ...form, role: value })}
-                    className={`p-3 rounded-xl border text-left transition-all duration-150 ${form.role === value ? 'border-indigo-500 bg-indigo-50 shadow-sm shadow-indigo-100' : 'border-slate-200 hover:border-indigo-300 bg-white'}`}>
+                  <button key={value} type="button"
+                    onClick={() => setForm({ ...form, role: value })}
+                    className={`p-3 rounded-xl border text-left transition-all ${
+                      form.role === value
+                        ? 'border-indigo-500 bg-indigo-50 shadow-sm'
+                        : 'border-slate-200 hover:border-indigo-300 bg-white'
+                    }`}>
                     <p className="text-sm font-semibold text-slate-700">{label}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
                   </button>
@@ -64,57 +66,57 @@ export default function Register() {
 
             {/* Name */}
             <div>
-              <label className="form-label" htmlFor="name">Full Name</label>
+              <label className="form-label">Full Name</label>
               <div className="relative">
                 <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                <input id="name" name="name" type="text" placeholder="John Doe"
+                <input name="name" type="text" placeholder="John Doe"
                   value={form.name} onChange={onChange} className="form-input pl-10" required />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="form-label" htmlFor="email">Email Address</label>
+              <label className="form-label">Email Address</label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                <input id="email" name="email" type="email" placeholder="you@example.com"
+                <input name="email" type="email" placeholder="you@example.com"
                   value={form.email} onChange={onChange} className="form-input pl-10" required />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="form-label" htmlFor="password">Password</label>
+              <label className="form-label">Password</label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                <input id="password" name="password" type={showPass ? 'text' : 'password'}
+                <input name="password" type={showPass ? 'text' : 'password'}
                   placeholder="At least 6 characters" value={form.password} onChange={onChange}
                   className="form-input pl-10 pr-10" required minLength={6} />
                 <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
                   {showPass ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
                 </button>
               </div>
-              {/* Password strength indicator */}
+              {/* Password strength */}
               <div className="mt-2 flex gap-1">
                 {[1,2,3].map((n) => (
-                  <div key={n} className={`h-1 flex-1 rounded-full transition-colors ${form.password.length >= n * 3 ? (form.password.length >= 9 ? 'bg-emerald-500' : 'bg-amber-400') : 'bg-slate-200'}`} />
+                  <div key={n} className={`h-1 flex-1 rounded-full transition-colors ${
+                    form.password.length >= n*3
+                      ? form.password.length >= 9 ? 'bg-emerald-500' : 'bg-amber-400'
+                      : 'bg-slate-200'
+                  }`} />
                 ))}
               </div>
             </div>
 
             <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base">
               {loading ? (
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 justify-center">
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Creating account...
                 </span>
               ) : 'Create Account'}
             </button>
-
-            <p className="text-xs text-slate-400 text-center">
-              By registering, you agree to our Terms of Service and Privacy Policy.
-            </p>
           </form>
         </div>
 

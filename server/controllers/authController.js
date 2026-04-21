@@ -19,7 +19,8 @@ const sendTokenResponse = (res, statusCode, message, user) => {
 // Register
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
+
     if (!name || !email || !password)
       return res.status(400).json({ success: false, message: 'Please provide name, email, and password.' });
     if (password.length < 6)
@@ -29,18 +30,18 @@ const register = async (req, res) => {
     if (existingUser)
       return res.status(409).json({ success: false, message: 'Email already registered. Please log in.' });
 
-    const user = await User.create({ name, email, password });
-    const otp = user.generateVerificationOTP();
-    await user.save({ validateBeforeSave: false });
+    // Allow role selection — user or recruiter
+    const assignedRole = role === 'recruiter' ? 'recruiter' : 'user';
 
-    try { await sendVerificationOTP(user.email, user.name, otp); } catch (e) { console.error('Email error:', e.message); }
-
-    res.status(201).json({
-      success: true,
-      message: `Account created! OTP sent to ${email}`,
-      userId: user._id,
-      requiresVerification: true,
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: assignedRole,
+      isEmailVerified: true, // Auto verify
     });
+
+    sendTokenResponse(res, 201, `Welcome to SmartHire, ${user.name}! 🎉`, user);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -85,34 +86,7 @@ const resendOTP = async (req, res) => {
 };
 
 // Login
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password)
-      return res.status(400).json({ success: false, message: 'Please provide email and password.' });
-
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-    if (!user) return res.status(401).json({ success: false, message: 'Invalid email or password.' });
-
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) return res.status(401).json({ success: false, message: 'Invalid email or password.' });
-
-    if (!user.isEmailVerified) {
-      const otp = user.generateVerificationOTP();
-      await user.save({ validateBeforeSave: false });
-      try { await sendVerificationOTP(user.email, user.name, otp); } catch (e) {}
-      return res.status(403).json({
-        success: false,
-        message: 'Please verify your email. OTP resent.',
-        requiresVerification: true,
-        userId: user._id,
-      });
-    }
-    sendTokenResponse(res, 200, `Welcome back, ${user.name}! 👋`, user);
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+ sendTokenResponse(res, 200, `Welcome back, ${user.name}! 👋`, user);
 
 // Forgot Password
 const forgotPassword = async (req, res) => {

@@ -24,17 +24,18 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'user'],
+      enum: ['admin', 'recruiter', 'user'],
       default: 'user',
     },
+    },
     bio:      { type: String, default: '' },
-    skills:   [{ type: String }],
+    skills:   [{type: String }],
     phone:    { type: String, default: '' },
     website:  { type: String, default: '' },
     location: { type: String, default: '' },
 
     // Email Verification
-    isEmailVerified:        { type: Boolean, default: false },
+    isEmailVerified: { type: Boolean, default: true },
     emailVerificationOTP:   { type: String,  default: null, select: false },
     emailVerificationExpire:{ type: Date,    default: null, select: false },
 
