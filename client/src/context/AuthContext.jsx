@@ -79,8 +79,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = useCallback(async (formData) => {
     const { data } = await axiosInstance.post('/auth/register', formData);
-    dispatch({ type: 'AUTH_SUCCESS', payload: { user: data.user, token: data.token } });
-    toast.success(data.message || 'Account created!');
+    toast.success(data.message || 'Account created. Please verify your email.');
     return data;
   }, []);
 

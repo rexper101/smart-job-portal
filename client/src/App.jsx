@@ -46,7 +46,7 @@ export default function App() {
           <Route path="/jobs"                  element={<Jobs />} />
           <Route path="/jobs/:id"              element={<JobDetail />} />
           <Route path="/forgot-password"       element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/reset-password"        element={<ResetPassword />} />
           <Route path="/verify-email"          element={<VerifyEmail />} />
           <Route path="/login"    element={<GuestRoute><Login /></GuestRoute>} />
           <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />

@@ -29,7 +29,7 @@ export default function ForgotPassword() {
             <FiMail className="w-8 h-8 text-indigo-600" />
           </div>
           <h1 className="text-2xl font-bold text-slate-800">Forgot Password?</h1>
-          <p className="text-slate-500 mt-2 text-sm">Enter your email and we'll send a reset link.</p>
+          <p className="text-slate-500 mt-2 text-sm">Enter your email and we'll send a reset OTP.</p>
         </div>
 
         <div className="card p-8">
@@ -37,8 +37,8 @@ export default function ForgotPassword() {
             <div className="text-center py-4">
               <p className="text-5xl mb-4">📬</p>
               <h3 className="font-bold text-slate-800 text-lg mb-2">Check Your Email!</h3>
-              <p className="text-slate-500 text-sm mb-4">Reset link sent to <span className="font-semibold text-indigo-600">{email}</span></p>
-              <p className="text-xs text-slate-400">Link expires in 15 minutes.</p>
+              <p className="text-slate-500 text-sm mb-4">Reset OTP sent to <span className="font-semibold text-indigo-600">{email}</span></p>
+              <p className="text-xs text-slate-400">OTP expires in 15 minutes.</p>
               <button onClick={() => setSent(false)} className="btn-secondary w-full mt-4">Try different email</button>
             </div>
           ) : (
@@ -52,11 +52,16 @@ export default function ForgotPassword() {
                 </div>
               </div>
               <button type="submit" disabled={loading} className="btn-primary w-full py-3">
-                {loading ? 'Sending...' : <><FiSend className="w-4 h-4" /> Send Reset Link</>}
+                {loading ? 'Sending...' : <><FiSend className="w-4 h-4" /> Send Reset OTP</>}
               </button>
             </form>
           )}
         </div>
+        {sent && (
+          <Link to="/reset-password" className="btn-secondary w-full mt-4 justify-center">
+            Enter OTP and reset password
+          </Link>
+        )}
 
         <Link to="/login" className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 mx-auto mt-5 justify-center">
           <FiArrowLeft className="w-4 h-4" /> Back to Login

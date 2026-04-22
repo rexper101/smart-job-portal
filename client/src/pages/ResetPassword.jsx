@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../services/axiosInstance';
 import toast from 'react-hot-toast';
-import { FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiLock, FiEye, FiEyeOff, FiMail } from 'react-icons/fi';
 
 export default function ResetPassword() {
-  const { token }  = useParams();
   const navigate   = useNavigate();
-  const [form,     setForm]     = useState({ password: '', confirm: '' });
+  const [form,     setForm]     = useState({ email: '', otp: '', password: '', confirm: '' });
   const [showPass, setShowPass] = useState(false);
   const [loading,  setLoading]  = useState(false);
 
@@ -15,9 +14,14 @@ export default function ResetPassword() {
     e.preventDefault();
     if (form.password.length < 6) { toast.error('Password must be at least 6 characters.'); return; }
     if (form.password !== form.confirm) { toast.error('Passwords do not match.'); return; }
+    if (!form.email || !form.otp) { toast.error('Email and OTP are required.'); return; }
     try {
       setLoading(true);
-      const { data } = await axiosInstance.put(`/auth/reset-password/${token}`, { password: form.password });
+      const { data } = await axiosInstance.put('/auth/reset-password', {
+        email: form.email,
+        otp: form.otp,
+        password: form.password,
+      });
       localStorage.setItem('sjp_token', data.token);
       toast.success('Password reset successfully!');
       navigate('/dashboard');
@@ -38,6 +42,26 @@ export default function ResetPassword() {
 
         <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="form-label">Email Address</label>
+              <div className="relative">
+                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                <input type="email" value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="you@example.com" className="form-input pl-10" required />
+              </div>
+            </div>
+
+            <div>
+              <label className="form-label">OTP</label>
+              <div className="relative">
+                <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                <input type="text" value={form.otp}
+                  onChange={(e) => setForm({ ...form, otp: e.target.value.replace(/\D/g, '').slice(0, 6) })}
+                  placeholder="6-digit code" className="form-input pl-10" required />
+              </div>
+            </div>
+
             <div>
               <label className="form-label">New Password</label>
               <div className="relative">

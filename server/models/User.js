@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'recruiter', 'user'],
       default: 'user',
     },
-    },
     bio:      { type: String, default: '' },
     skills:   [{type: String }],
     phone:    { type: String, default: '' },
@@ -35,7 +34,7 @@ const userSchema = new mongoose.Schema(
     location: { type: String, default: '' },
 
     // Email Verification
-    isEmailVerified: { type: Boolean, default: true },
+    isEmailVerified: { type: Boolean, default: false },
     emailVerificationOTP:   { type: String,  default: null, select: false },
     emailVerificationExpire:{ type: Date,    default: null, select: false },
 

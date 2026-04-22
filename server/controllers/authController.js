@@ -16,7 +16,6 @@ const sendTokenResponse = (res, statusCode, message, user) => {
   });
 };
 
-// Register
 const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -38,10 +37,20 @@ const register = async (req, res) => {
       email,
       password,
       role: assignedRole,
-      isEmailVerified: true, // Auto verify
+      isEmailVerified: false,
     });
 
-    sendTokenResponse(res, 201, `Welcome to SmartHire, ${user.name}! 🎉`, user);
+    const otp = user.generateVerificationOTP();
+    await user.save({ validateBeforeSave: false });
+    await sendVerificationOTP(user.email, user.name, otp);
+
+    res.status(201).json({
+      success: true,
+      requiresVerification: true,
+      userId: user._id,
+      email: user.email,
+      message: 'Account created. Please verify your email with the OTP sent to your inbox.',
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -69,11 +78,14 @@ const verifyEmail = async (req, res) => {
   }
 };
 
-// Resend OTP
 const resendOTP = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
+    const { userId, email } = req.body;
+    let user = null;
+
+    if (userId) user = await User.findById(userId);
+    if (!user && email) user = await User.findOne({ email: email.toLowerCase() });
+
     if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
     if (user.isEmailVerified) return res.status(400).json({ success: false, message: 'Already verified.' });
     const otp = user.generateVerificationOTP();
@@ -85,24 +97,51 @@ const resendOTP = async (req, res) => {
   }
 };
 
-// Login
- sendTokenResponse(res, 200, `Welcome back, ${user.name}! 👋`, user);
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ success: false, message: 'Please provide email and password.' });
 
-// Forgot Password
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials.' });
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) return res.status(401).json({ success: false, message: 'Invalid credentials.' });
+
+    if (!user.isEmailVerified) {
+      const otp = user.generateVerificationOTP();
+      await user.save({ validateBeforeSave: false });
+      await sendVerificationOTP(user.email, user.name, otp);
+      return res.status(403).json({
+        success: false,
+        requiresVerification: true,
+        userId: user._id,
+        message: 'Please verify your email before logging in. A new OTP has been sent.',
+      });
+    }
+
+    sendTokenResponse(res, 200, `Welcome back, ${user.name}!`, user);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ success: false, message: 'Please provide your email.' });
     const user = await User.findOne({ email: email.toLowerCase() });
-    if (!user) return res.json({ success: true, message: 'If that email exists, a reset link was sent.' });
+    if (!user) return res.json({ success: true, message: 'If that email exists, a reset OTP was sent.' });
 
-    const resetToken = user.generateResetPasswordToken();
+    const resetOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    user.resetPasswordToken = crypto.createHash('sha256').update(resetOTP).digest('hex');
+    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
     await user.save({ validateBeforeSave: false });
-    const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
     try {
-      await sendPasswordResetEmail(user.email, user.name, resetURL);
-      res.json({ success: true, message: 'Password reset link sent to your email!' });
+      await sendPasswordResetEmail(user.email, user.name, resetOTP);
+      res.json({ success: true, message: 'Password reset OTP sent to your email.' });
     } catch (e) {
       user.resetPasswordToken = null;
       user.resetPasswordExpire = null;
@@ -114,15 +153,18 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// Reset Password
 const resetPassword = async (req, res) => {
   try {
-    const { password } = req.body;
+    const { email, otp, password } = req.body;
+    if (!email || !otp)
+      return res.status(400).json({ success: false, message: 'Email and OTP are required.' });
+
     if (!password || password.length < 6)
       return res.status(400).json({ success: false, message: 'Password must be at least 6 characters.' });
 
-    const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+    const hashedToken = crypto.createHash('sha256').update(otp).digest('hex');
     const user = await User.findOne({
+      email: email.toLowerCase(),
       resetPasswordToken: hashedToken,
       resetPasswordExpire: { $gt: Date.now() },
     }).select('+resetPasswordToken +resetPasswordExpire');
@@ -160,4 +202,7 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { register, verifyEmail, resendOTP, login, forgotPassword, resetPassword, getMe, updateProfile };
+module.exports = { 
+  register, verifyEmail, resendOTP, login, 
+  forgotPassword, resetPassword, getMe, updateProfile 
+};
