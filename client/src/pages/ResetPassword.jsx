@@ -91,7 +91,7 @@ export default function ResetPassword() {
             </div>
 
             <button type="submit" disabled={loading} className="btn-primary w-full py-3">
-              {loading ? 'Resetting...' : '🔑 Reset Password'}
+              {loading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>
         </div>

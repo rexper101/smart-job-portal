@@ -96,7 +96,7 @@ export default function VerifyEmail() {
           </div>
 
           <button onClick={handleVerify} disabled={loading || otp.join('').length !== 6} className="btn-primary w-full py-3 mb-4">
-            {loading ? 'Verifying...' : '✅ Verify Email'}
+            {loading ? 'Verifying...' : 'Verify Email'}
           </button>
 
           <div className="text-center">
@@ -104,7 +104,7 @@ export default function VerifyEmail() {
               <p className="text-sm text-slate-500">Resend in <span className="font-bold text-indigo-600">{countdown}s</span></p>
             ) : (
               <button onClick={handleResend} disabled={resending} className="text-sm font-semibold text-indigo-600 hover:underline">
-                {resending ? 'Sending...' : '🔄 Resend OTP'}
+                {resending ? 'Sending...' : 'Resend OTP'}
               </button>
             )}
           </div>

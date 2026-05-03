@@ -35,7 +35,7 @@ export default function ForgotPassword() {
         <div className="card p-8">
           {sent ? (
             <div className="text-center py-4">
-              <p className="text-5xl mb-4">📬</p>
+              <FiSend className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
               <h3 className="font-bold text-slate-800 text-lg mb-2">Check Your Email!</h3>
               <p className="text-slate-500 text-sm mb-4">Reset OTP sent to <span className="font-semibold text-indigo-600">{email}</span></p>
               <p className="text-xs text-slate-400">OTP expires in 15 minutes.</p>

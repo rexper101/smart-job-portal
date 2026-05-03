@@ -54,7 +54,7 @@ export default function JobDetail() {
       await applicationAPI.apply({ jobId: id, ...form });
       setApplied(true);
       setShowModal(false);
-      toast.success('Application submitted! 🎉');
+      toast.success('Application submitted.');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to apply.');
     } finally {
@@ -166,7 +166,7 @@ export default function JobDetail() {
 
             {applied ? (
               <div className="text-center py-4">
-                <p className="text-3xl mb-2">🎉</p>
+                <FiCheckCircle className="w-10 h-10 mx-auto mb-2 text-emerald-500" />
                 <p className="text-sm font-semibold text-emerald-600">Application Submitted!</p>
                 <Link to="/applications" className="btn-secondary mt-3 w-full">View My Applications</Link>
               </div>

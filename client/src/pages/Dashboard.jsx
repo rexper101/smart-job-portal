@@ -115,7 +115,7 @@ const RecruiterDashboard = ({ user }) => {
 
       {loading ? <Spinner /> : jobs.length === 0 ? (
         <div className="card p-12 text-center">
-          <p className="text-5xl mb-4">📋</p>
+          <FiBriefcase className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
           <h3 className="text-lg font-semibold text-slate-700 dark:text-white mb-2">No jobs posted yet</h3>
           <p className="text-slate-500 mb-5">Post your first job listing to start receiving applications.</p>
           <Link to="/post-job" className="btn-primary">Post Your First Job</Link>
@@ -215,7 +215,7 @@ const RecruiterDashboard = ({ user }) => {
                             )}
                             {app.resume && (
                               <a href={app.resume} target="_blank" rel="noopener noreferrer"
-                                className="text-xs text-indigo-500 hover:underline mt-1 inline-block">📎 View Resume</a>
+                                className="text-xs text-indigo-500 hover:underline mt-1 inline-block">View Resume</a>
                             )}
                           </div>
                         </div>
@@ -260,9 +260,9 @@ const UserDashboard = ({ user }) => {
       </div>
 
       {/* Tips banner */}
-      <div className="rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-5 flex items-center justify-between gap-4">
+      <div className="rounded-2xl bg-gradient-to-r from-indigo-600 to-slate-800 text-white p-5 flex items-center justify-between gap-4">
         <div>
-          <h3 className="font-bold mb-1">🚀 Ready to apply?</h3>
+          <h3 className="font-bold mb-1">Ready to apply?</h3>
           <p className="text-indigo-100 text-sm">Browse thousands of fresh opportunities updated daily.</p>
         </div>
         <Link to="/jobs" className="flex-shrink-0 px-4 py-2 bg-white text-indigo-700 font-bold rounded-xl text-sm hover:bg-yellow-50 transition-colors">
@@ -279,7 +279,7 @@ const UserDashboard = ({ user }) => {
 
         {loading ? <Spinner /> : apps.length === 0 ? (
           <div className="card p-12 text-center">
-            <p className="text-5xl mb-4">📨</p>
+            <FiFileText className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
             <h3 className="text-lg font-semibold text-slate-700 dark:text-white mb-2">No applications yet</h3>
             <p className="text-slate-500 mb-5">Start applying to jobs you love and track your progress here.</p>
             <Link to="/jobs" className="btn-primary">Find Jobs</Link>
@@ -312,7 +312,7 @@ const UserDashboard = ({ user }) => {
 
       {/* Profile completion hint */}
       <div className="card p-5 bg-amber-50 border-amber-100">
-        <h3 className="font-semibold text-amber-800 mb-1 text-sm">💡 Complete Your Profile</h3>
+        <h3 className="font-semibold text-amber-800 mb-1 text-sm">Complete Your Profile</h3>
         <p className="text-amber-700 text-xs mb-3">A complete profile with skills and bio increases your chances of getting selected.</p>
         <Link to="/profile" className="text-xs font-semibold text-amber-700 hover:text-amber-900 underline">Update Profile →</Link>
       </div>
@@ -338,7 +338,7 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="card p-6 bg-gradient-to-r from-slate-800 to-slate-900 text-white border-none">
-        <h2 className="font-bold text-lg mb-1">👑 Admin Overview</h2>
+        <h2 className="font-bold text-lg mb-1">Admin Overview</h2>
         <p className="text-slate-300 text-sm">You have full access to manage all platform data.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -393,7 +393,7 @@ export default function Dashboard() {
     return 'Good evening';
   };
 
-  const roleLabel = { admin: '👑 Admin', recruiter: '🏢 Recruiter', user: '👤 Job Seeker' };
+  const roleLabel = { admin: 'Admin', recruiter: 'Recruiter', user: 'Job Seeker' };
 
   return (
     <div className="container-app py-10">
@@ -405,7 +405,7 @@ export default function Dashboard() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-              {greet()}, {user?.name?.split(' ')[0]}! 👋
+              {greet()}, {user?.name?.split(' ')[0]}
             </h1>
             <span className="text-xs font-semibold px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-full">
               {roleLabel[user?.role]}

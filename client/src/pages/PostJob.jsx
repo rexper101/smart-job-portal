@@ -44,7 +44,7 @@ export default function PostJob() {
     try {
       setLoading(true);
       const { data } = await jobAPI.create(form);
-      toast.success('Job posted successfully! 🎉');
+      toast.success('Job posted successfully.');
       navigate(`/jobs/${data.job._id}`);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to post job.');
@@ -163,7 +163,7 @@ export default function PostJob() {
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 Posting...
               </span>
-            ) : '🚀 Post Job'}
+            ) : 'Post Job'}
           </button>
         </div>
       </form>

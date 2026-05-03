@@ -161,7 +161,7 @@ export default function Applications() {
         <Spinner />
       ) : filtered.length === 0 ? (
         <div className="card p-16 text-center">
-          <p className="text-5xl mb-4">{activeTab ? '🔍' : '📨'}</p>
+          <FiFileText className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
           <h3 className="text-lg font-semibold text-slate-700 dark:text-white mb-2">
             {activeTab || search ? 'No matching applications' : 'No applications yet'}
           </h3>
@@ -247,7 +247,7 @@ export default function Applications() {
                         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Resume</p>
                         <a href={app.resume} target="_blank" rel="noopener noreferrer"
                           className="text-sm text-indigo-600 hover:underline break-all">
-                          📎 {app.resume}
+                          {app.resume}
                         </a>
                       </div>
                     )}

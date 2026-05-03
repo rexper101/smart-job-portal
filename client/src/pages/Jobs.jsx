@@ -161,7 +161,7 @@ export default function Jobs() {
         <Spinner />
       ) : jobs.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-5xl mb-4">🔍</p>
+          <FiSearch className="w-12 h-12 mx-auto mb-4 text-indigo-500" />
           <h3 className="text-xl font-semibold text-slate-700 dark:text-white mb-2">No jobs found</h3>
           <p className="text-slate-500 mb-4">Try adjusting your search filters.</p>
           <button onClick={clearFilters} className="btn-primary">Clear All Filters</button>

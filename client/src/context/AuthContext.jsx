@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     dispatch({ type: 'LOGOUT' });
-    toast.success('Logged out successfully. See you soon! 👋');
+    toast.success('Logged out successfully. See you soon.');
   }, []);
 
   const updateUser = useCallback((user) => {

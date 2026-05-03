@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   FiSearch, FiBriefcase, FiUsers, FiTrendingUp,
-  FiShield, FiZap, FiGlobe, FiArrowRight, FiCheckCircle,
+  FiShield, FiZap, FiGlobe, FiArrowRight, FiCheckCircle, FiGrid,
 } from 'react-icons/fi';
 
 // ── Stats data ────────────────────────────────────────────────────────────────
@@ -27,14 +27,14 @@ const FEATURES = [
 ];
 
 const CATEGORIES = [
-  { label: 'Technology',  emoji: '💻' },
-  { label: 'Design',      emoji: '🎨' },
-  { label: 'Marketing',   emoji: '📣' },
-  { label: 'Finance',     emoji: '💰' },
-  { label: 'Healthcare',  emoji: '🏥' },
-  { label: 'Engineering', emoji: '⚙️' },
-  { label: 'Education',   emoji: '📚' },
-  { label: 'HR',          emoji: '🤝' },
+  { label: 'Technology' },
+  { label: 'Design' },
+  { label: 'Marketing' },
+  { label: 'Finance' },
+  { label: 'Healthcare' },
+  { label: 'Engineering' },
+  { label: 'Education' },
+  { label: 'HR' },
 ];
 
 export default function Home() {
@@ -51,7 +51,7 @@ export default function Home() {
     <div className="animate-fade-in">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
         {/* Decorative blobs */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-violet-500/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-800/40 rounded-full blur-3xl" />
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="container-app relative z-10 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm text-white text-sm rounded-full border border-white/20 mb-6 font-medium">
-              🚀 The Smartest Way to Find Your Next Job
+              Trusted Platform for Smarter Hiring
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
               Connect Talent with{' '}
@@ -122,10 +122,12 @@ export default function Home() {
           <p className="text-slate-500 dark:text-slate-400">Explore opportunities in your field</p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {CATEGORIES.map(({ label, emoji }) => (
+          {CATEGORIES.map(({ label }) => (
             <Link key={label} to={`/jobs?category=${label}`}
               className="card p-5 text-center hover:border-indigo-200 hover:shadow-indigo-100 cursor-pointer group transition-all duration-200">
-              <span className="text-3xl mb-2 block">{emoji}</span>
+              <span className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center mx-auto mb-3">
+                <FiGrid className="w-5 h-5 text-indigo-600" />
+              </span>
               <p className="text-sm font-semibold text-slate-700 dark:text-white group-hover:text-indigo-600 transition-colors">{label}</p>
             </Link>
           ))}

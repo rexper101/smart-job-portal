@@ -49,7 +49,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
           <p>© {new Date().getFullYear()} SmartHire Job Portal. All rights reserved.</p>
-          <p>Built with ❤️ using MERN Stack</p>
+          <p>Built using MERN Stack</p>
         </div>
       </div>
     </footer>

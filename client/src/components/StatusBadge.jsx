@@ -7,17 +7,10 @@ const STATUS_STYLES = {
   rejected:  'bg-red-100 text-red-700 border border-red-200',
 };
 
-const STATUS_ICONS = {
-  applied:   '📨',
-  reviewing: '🔍',
-  selected:  '✅',
-  rejected:  '❌',
-};
-
 export default function StatusBadge({ status }) {
   return (
     <span className={`badge capitalize font-semibold text-xs px-3 py-1 ${STATUS_STYLES[status] || 'bg-slate-100 text-slate-600'}`}>
-      {STATUS_ICONS[status]} {status}
+      {status}
     </span>
   );
 }

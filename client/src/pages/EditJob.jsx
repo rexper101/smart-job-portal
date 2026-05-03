@@ -141,7 +141,7 @@ export default function EditJob() {
         <div className="flex gap-3">
           <button type="button" onClick={() => navigate(`/jobs/${id}`)} className="btn-secondary flex-1">Cancel</button>
           <button type="submit" disabled={loading} className="btn-primary flex-1 py-3">
-            {loading ? 'Saving...' : '✅ Save Changes'}
+            {loading ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </form>

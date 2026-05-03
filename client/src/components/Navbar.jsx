@@ -51,7 +51,7 @@ export default function Navbar() {
   const navLinkCls = ({ isActive }) =>
     `text-sm font-medium transition-colors duration-150 ${isActive ? 'text-indigo-600' : 'text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400'}`;
 
-  const roleLabel = { admin: '👑 Admin', recruiter: '🏢 Recruiter', user: '👤 Seeker' };
+  const roleLabel = { admin: 'Admin', recruiter: 'Recruiter', user: 'Seeker' };
 
   return (
     <header className={`sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 transition-shadow duration-200 ${scrolled ? 'shadow-md' : ''}`}>

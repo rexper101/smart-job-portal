@@ -9,7 +9,9 @@ export default function NotFound() {
       <div className="text-center animate-slide-up max-w-md">
         {/* Illustration */}
         <div className="relative mb-8 inline-block">
-          <div className="text-[120px] leading-none select-none">🔍</div>
+          <div className="w-24 h-24 rounded-3xl bg-indigo-100 flex items-center justify-center">
+            <FiSearch className="w-12 h-12 text-indigo-600" />
+          </div>
           <div className="absolute -top-2 -right-2 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
             <span className="text-red-500 font-bold text-lg">!</span>
           </div>

@@ -90,7 +90,7 @@ export default function Profile() {
       setSaving(true);
       const { data } = await authAPI.updateProfile(form);
       updateUser(data.user);
-      toast.success('Profile updated successfully! ✅');
+      toast.success('Profile updated successfully.');
       setEditing(false);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to save profile.');
@@ -108,9 +108,9 @@ export default function Profile() {
   };
 
   const roleBadge = {
-    admin:     { label: '👑 Admin',       color: 'bg-purple-100 text-purple-700' },
-    recruiter: { label: '🏢 Recruiter',   color: 'bg-blue-100   text-blue-700' },
-    user:      { label: '👤 Job Seeker',  color: 'bg-emerald-100 text-emerald-700' },
+    admin:     { label: 'Admin',      color: 'bg-purple-100 text-purple-700' },
+    recruiter: { label: 'Recruiter',  color: 'bg-blue-100   text-blue-700' },
+    user:      { label: 'Job Seeker', color: 'bg-emerald-100 text-emerald-700' },
   }[user?.role] || {};
 
   // Profile completeness score

@@ -5,8 +5,8 @@ import { FiBriefcase, FiUser, FiMail, FiLock, FiEye, FiEyeOff } from 'react-icon
 import toast from 'react-hot-toast';
 
 const ROLES = [
-  { value: 'user',      label: '👤 Job Seeker',  desc: 'Browse and apply to jobs' },
-  { value: 'recruiter', label: '🏢 Recruiter',    desc: 'Post jobs and hire talent' },
+  { value: 'user',      label: 'Job Seeker',  desc: 'Browse and apply to jobs' },
+  { value: 'recruiter', label: 'Recruiter',   desc: 'Post jobs and hire talent' },
 ];
 
 export default function Register() {
