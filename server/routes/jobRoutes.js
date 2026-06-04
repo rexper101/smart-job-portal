@@ -4,8 +4,8 @@ const { getAllJobs, getJobById, createJob, updateJob, deleteJob, getMyJobs } = r
 const { protect } = require('../middleware/auth');
 
 router.get('/',                   getAllJobs);
-router.get('/:id',                getJobById);
 router.get('/recruiter/my-jobs',  protect, getMyJobs);
+router.get('/:id',                getJobById);
 router.post('/',                  protect, createJob);
 router.put('/:id',                protect, updateJob);
 router.delete('/:id',             protect, deleteJob);

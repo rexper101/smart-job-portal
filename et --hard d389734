@@ -1,0 +1,20 @@
+[33m71a9bd6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m changes
+[33md389734[m changes
+[33m0999dfe[m changes
+[33m7ad34a9[m changes
+[33m62bee85[m changes
+[33m7615c5d[m changes
+[33ma30d034[m changes
+[33m17967cf[m changes
+[33m6700a48[m changes
+[33md8ee89b[m changes
+[33m56c73ee[m changes
+[33m2e5caae[m changes
+[33m0dbf7eb[m changes
+[33me21e7b1[m fix: use google DNS for Atlas SRV resolution, fix OtP email config
+[33m864ed28[m fix verification and OTP-based password reset flow
+[33m51e2a4d[m Fix auth routes - add forgot password route
+[33m85244af[m Fix auth - skip OTP, restore recruiter role
+[33m8cd112f[m Add email verification, forgot password, single profile
+[33m0b27c3b[m Add production API URL
+[33mcd34ffc[m Initial commit - Smart Job Portal
