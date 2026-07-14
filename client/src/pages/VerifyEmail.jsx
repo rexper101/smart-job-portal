@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../services/axiosInstance';
 import toast from 'react-hot-toast';
 import { FiMail, FiArrowLeft } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 
 export default function VerifyEmail() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function VerifyEmail() {
   const userId = location.state?.userId;
   const email  = location.state?.email;
 
+  const { setAuth } = useAuth();
   const [otp,       setOtp]       = useState(['', '', '', '', '', '']);
   const [loading,   setLoading]   = useState(false);
   const [resending, setResending] = useState(false);
@@ -48,7 +50,7 @@ export default function VerifyEmail() {
     try {
       setLoading(true);
       const { data } = await axiosInstance.post('/auth/verify-email', { userId, otp: otpString });
-      localStorage.setItem('sjp_token', data.token);
+      setAuth({ user: data.user, token: data.token });
       toast.success(data.message);
       navigate('/dashboard');
     } catch (err) {

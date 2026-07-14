@@ -83,6 +83,10 @@ export const AuthProvider = ({ children }) => {
     return data;
   }, []);
 
+  const setAuth = useCallback(({ user, token }) => {
+    dispatch({ type: 'AUTH_SUCCESS', payload: { user, token } });
+  }, []);
+
   const logout = useCallback(() => {
     dispatch({ type: 'LOGOUT' });
     toast.success('Logged out successfully. See you soon.');
@@ -93,7 +97,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, register, logout, updateUser }}>
+    <AuthContext.Provider value={{ ...state, login, register, logout, updateUser, setAuth }}>
       {children}
     </AuthContext.Provider>
   );

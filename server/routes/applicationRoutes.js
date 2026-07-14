@@ -12,6 +12,6 @@ router.get('/my',          protect, authorize('user'), getMyApplications);
 router.get('/job/:jobId',  protect, authorize('recruiter', 'admin'), getJobApplications);
 router.get('/',            protect, authorize('admin'), getAllApplications);
 router.put('/:id',         protect, authorize('recruiter', 'admin'), updateApplicationStatus);
-router.delete('/:id',      protect, authorize('recruiter', 'admin'), deleteApplication);
+router.delete('/:id',      protect, authorize('user', 'admin'), deleteApplication);
 
 module.exports = router;

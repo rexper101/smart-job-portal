@@ -3,9 +3,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../services/axiosInstance';
 import toast from 'react-hot-toast';
 import { FiLock, FiEye, FiEyeOff, FiMail } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 
 export default function ResetPassword() {
   const navigate   = useNavigate();
+  const { setAuth } = useAuth();
   const [form,     setForm]     = useState({ email: '', otp: '', password: '', confirm: '' });
   const [showPass, setShowPass] = useState(false);
   const [loading,  setLoading]  = useState(false);
@@ -22,11 +24,11 @@ export default function ResetPassword() {
         otp: form.otp,
         password: form.password,
       });
-      localStorage.setItem('sjp_token', data.token);
+      setAuth({ user: data.user, token: data.token });
       toast.success('Password reset successfully!');
       navigate('/dashboard');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Reset failed. Link may have expired.');
+      toast.error(err.response?.data?.message || 'Reset failed. OTP may have expired.');
     } finally { setLoading(false); }
   };
 
